@@ -261,10 +261,6 @@ public class ProductServiceImplement implements ProductService{
 
     @Override
     public ResponseEntity<? super GetProductListResponseDto> getProductList(AuthToken authToken) {
-        
-        boolean martRole = AuthTokenMartRoleValidation.martRoleValidation(authToken);
-
-        if(!martRole) return ResponseMessage.NO_PERMISSIONS;
 
         GetProductListResponseDto body = null;
 
@@ -283,10 +279,6 @@ public class ProductServiceImplement implements ProductService{
 
     @Override
     public ResponseEntity<? super GetProductResponseDto> getProduct(AuthToken authToken, Integer productNumber) {
-     
-        boolean martRole = AuthTokenMartRoleValidation.martRoleValidation(authToken);
-
-        if(!martRole) return ResponseMessage.NO_PERMISSIONS;
 
         if(productNumber == null) return ResponseMessage.VAILDATION_FAILED;
 

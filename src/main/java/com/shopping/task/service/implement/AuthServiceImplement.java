@@ -12,6 +12,7 @@ import com.shopping.task.provider.JwtProvider;
 import com.shopping.task.repository.UserRepository;
 import com.shopping.task.service.AuthService;
 
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
