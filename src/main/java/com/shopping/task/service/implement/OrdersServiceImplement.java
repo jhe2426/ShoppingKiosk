@@ -340,7 +340,9 @@ public class OrdersServiceImplement implements OrdersService{
                     OrdersProductEntity ordersProductEntity = new OrdersProductEntity(ordersEntity, productEntity, inputProductQuantity);
                     ordersProductRepository.save(ordersProductEntity);
                 }
-            }            
+            }
+            
+            userCouponRepository.delete(userCouponEntity);
 
         } catch (Exception exception) {
             exception.printStackTrace();
