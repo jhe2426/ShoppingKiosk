@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.ResponseEntity;
 
+import com.shopping.task.dto.request.CouponApplicationOrdersInformation;
+import com.shopping.task.dto.request.PostCouponApplicationOrdersRequestDto;
 import com.shopping.task.dto.request.PostProductOrdersRequestDto;
 import com.shopping.task.dto.request.ProductOrdersInformation;
 import com.shopping.task.dto.response.ResponseDto;
@@ -40,7 +42,10 @@ public class OrdersSerivceTest {
 
     @Test
     public void postOrders() {
-        AuthToken authToken = new AuthToken("jhe2426", "user");
+
+        String userId = "jhe2426";
+
+        AuthToken authToken = new AuthToken(userId, "user");
 
         List<ProductOrdersInformation> productOrdersInformationList = new ArrayList<>();
 
@@ -70,7 +75,7 @@ public class OrdersSerivceTest {
         assertEquals("SU", code);
         assertEquals("Success", message);
 
-        UserEntity userEntity = userRepository.findById("jhe2426");
+        UserEntity userEntity = userRepository.findById(userId);
 
         int orderNumber = ordersRepository.getRecentOrdersNumber(userEntity);
 
@@ -93,6 +98,78 @@ public class OrdersSerivceTest {
 
     }
 
+
+    @Test
+    public void postCouponApplicationOrders() {
+
+        String userId = "jhe2426";
+
+        AuthToken authToken = new AuthToken(userId, "user");
+
+        
+
+        int inputProductNumberOne = 20;
+        int inputProductQuantityOne = 2;
+
+        
+        int inputProductNumberTwo = 21;
+        int inputProductQuantityTwo = 1;
+
+        int inputCouponNumber = 7;
+
+        CouponApplicationOrdersInformation couponApplicationOrdersInformationOne 
+            = new CouponApplicationOrdersInformation(inputProductNumberOne, inputProductQuantityOne);
+
+        CouponApplicationOrdersInformation couponApplicationOrdersInformationTwo
+            = new CouponApplicationOrdersInformation(inputProductNumberTwo, inputProductQuantityTwo);
+
+        List<CouponApplicationOrdersInformation> productOrdersInformationList = new ArrayList<>();
+
+        productOrdersInformationList.add(couponApplicationOrdersInformationOne);
+        productOrdersInformationList.add(couponApplicationOrdersInformationTwo);
+
+        PostCouponApplicationOrdersRequestDto postCouponApplicationOrdersRequestDto 
+            = new PostCouponApplicationOrdersRequestDto(productOrdersInformationList, inputCouponNumber);
+
+
+        ResponseEntity<ResponseDto> response 
+            = ordersService.postCouponApplicationOrders(authToken, postCouponApplicationOrdersRequestDto);
+
+        ResponseDto responseDto = (ResponseDto)response.getBody();
+
+
+        String code = responseDto.getCode();
+        String message = responseDto.getMessage();
+    
+        assertEquals("SU", code);
+        assertEquals("Success", message);
+
+
+        UserEntity userEntity = userRepository.findById(userId);
+
+        int orderNumber = ordersRepository.getRecentOrdersNumber(userEntity);
+
+        OrdersEntity ordersEntity = ordersRepository.findByOrdersNumber(orderNumber);
+
+        List<OrdersProductEntity> ordersProductEntities = ordersProductRepository.findByOrdersEntity(ordersEntity);
+
+        int ordersProductNumberOne = ordersProductEntities.get(0).getProductNumber();
+        int ordersProductQuantityOne = ordersProductEntities.get(0).getProductQuantity();
+
+        int ordersProductNumberTwo = ordersProductEntities.get(1).getProductNumber();
+        int ordersProductQuantityTwo = ordersProductEntities.get(1).getProductQuantity();
+
+        int ordersCouponNumber = ordersEntity.getCouponPkNumber();
+
+        assertEquals(inputCouponNumber, ordersCouponNumber);
+
+        assertEquals(inputProductNumberOne, ordersProductNumberOne);
+        assertEquals(inputProductQuantityOne, ordersProductQuantityOne);
+
+        assertEquals(inputProductNumberTwo, ordersProductNumberTwo);
+        assertEquals(inputProductQuantityTwo, ordersProductQuantityTwo);
+
+    }
 
 
   
