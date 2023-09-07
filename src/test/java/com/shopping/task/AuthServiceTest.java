@@ -10,6 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.ResponseEntity;
 
 import com.shopping.task.dto.response.GetMartTokenResponseDto;
+import com.shopping.task.dto.response.GetUserTokenResponseDto;
 import com.shopping.task.service.AuthService;
 
 
@@ -21,7 +22,7 @@ public class AuthServiceTest {
     AuthService authService;
 
     @Test
-    public void getMartToke() {
+    public void getMartToken() {
        ResponseEntity<? super GetMartTokenResponseDto> response = authService.getMartToken();
 
        GetMartTokenResponseDto getMartTokenResponseDto = (GetMartTokenResponseDto)response.getBody();
@@ -31,6 +32,24 @@ public class AuthServiceTest {
 
        assertEquals("SU", code);
        assertEquals("Success", message);
+       
        assertNotNull(token);
+    }
+
+    @Test
+    public void getUserToken() {
+        String userId = "jhe2426";
+        ResponseEntity<? super GetUserTokenResponseDto> response = authService.getUserToken(userId);
+
+        GetUserTokenResponseDto getUserTokenResponseDto = (GetUserTokenResponseDto)response.getBody();
+        String code = getUserTokenResponseDto.getCode();
+        String message = getUserTokenResponseDto.getMessage();
+        String token = getUserTokenResponseDto.getToken();
+        
+        assertEquals("SU", code);
+        assertEquals("Success", message);
+
+        assertNotNull(token);
+
     }
 }
