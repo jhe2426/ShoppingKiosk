@@ -51,8 +51,7 @@ class OrdersProduct {
     private int productQuantity;
 
     public OrdersProduct(OrdersProductEntity ordersProductEntity) {
-        ProductEntity productEntity = ordersProductEntity.getProductEntity();
-        int productNumber = productEntity.getProductNumber();
+        int productNumber = ordersProductEntity.getProductNumber();
         this.ordersProductNumber = ordersProductEntity.getOrdersProductNumber();
         this.productNumber =productNumber;
         this.productQuantity = ordersProductEntity.getProductQuantity();

@@ -1,6 +1,7 @@
 package com.shopping.task;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,8 +52,8 @@ public class ProductSerivceTest {
     public void patchPriceProduct() {
         AuthToken authToken = new AuthToken("martId", "mart");
 
-        int inputProductNumber = 4;
-        int inputProductPrice = 30000;
+        int inputProductNumber = 1;
+        int inputProductPrice = 40000;
 
         PatchPriceProductRequestDto patchPriceProductRequestDto = new PatchPriceProductRequestDto(inputProductNumber, inputProductPrice);
 
@@ -71,5 +72,26 @@ public class ProductSerivceTest {
         int productPrice = productEntity.getPrice();
 
         assertEquals(inputProductPrice, productPrice);
+    }
+
+    @Test
+    public void deleteProduct() {
+        AuthToken authToken = new AuthToken("martId", "mart");
+
+        Integer productNumber = 10;
+        
+        ResponseEntity<ResponseDto> responseDto = productService.deleteProduct(authToken, productNumber);
+
+        ResponseDto response = responseDto.getBody();
+
+        String code = response.getCode();
+        String message = response.getMessage();
+
+        assertEquals("SU", code);
+        assertEquals("Success", message);
+
+        ProductEntity productEntity = productRepository.findByProductNumber(productNumber);
+
+        assertNull(productEntity);
     }
 }

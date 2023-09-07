@@ -31,16 +31,15 @@ public class OrdersProductEntity {
     @JoinColumn(name = "orders_number", nullable = false)
     private OrdersEntity ordersEntity;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "product_number", nullable = false)
-    private ProductEntity productEntity;
+    @Column(name = "product_number", nullable = false)
+    private int productNumber;
 
     @Column(name = "product_quantity", nullable = false)
     private int productQuantity;
 
     public OrdersProductEntity(OrdersEntity ordersEntity, ProductEntity productEntity, int productQuantity) {
         this.ordersEntity = ordersEntity;
-        this.productEntity = productEntity;
+        this.productNumber = productEntity.getProductNumber();
         this.productQuantity = productQuantity;
     }
 }
