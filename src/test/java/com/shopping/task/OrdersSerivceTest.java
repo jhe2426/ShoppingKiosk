@@ -60,12 +60,12 @@ public class OrdersSerivceTest {
 
         PostProductOrdersRequestDto postProductOrdersRequestDto = new PostProductOrdersRequestDto(productOrdersInformationList);
 
-        ResponseEntity<ResponseDto> responseDto = ordersService.postProductOrders(authToken, postProductOrdersRequestDto);
+        ResponseEntity<ResponseDto> response = ordersService.postProductOrders(authToken, postProductOrdersRequestDto);
 
-        ResponseDto response = responseDto.getBody();
+        ResponseDto responseDto = response.getBody();
 
-        String code = response.getCode();
-        String message = response.getMessage();
+        String code = responseDto.getCode();
+        String message = responseDto.getMessage();
     
         assertEquals("SU", code);
         assertEquals("Success", message);
@@ -92,4 +92,8 @@ public class OrdersSerivceTest {
         assertEquals(inputProductQuantityTwo, ordersProductQuantityTwo);
 
     }
+
+
+
+  
 }

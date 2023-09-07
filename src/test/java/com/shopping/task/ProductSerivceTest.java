@@ -8,8 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.ResponseEntity;
 
+import com.shopping.task.dto.request.GetParticularDateProductPriceRequestDto;
 import com.shopping.task.dto.request.PatchPriceProductRequestDto;
 import com.shopping.task.dto.request.PostProductRequestDto;
+import com.shopping.task.dto.response.GetParticularDateProductPriceResponseDto;
 import com.shopping.task.dto.response.ResponseDto;
 import com.shopping.task.entity.ProductEntity;
 import com.shopping.task.provider.AuthToken;
@@ -37,12 +39,12 @@ public class ProductSerivceTest {
 
         PostProductRequestDto productRequestDto = new PostProductRequestDto(inputProdcutName, inputProductPrice, inputProdcutDeliveryCharge);
         
-        ResponseEntity<ResponseDto> responseDto = productService.postProduct(authToken, productRequestDto);
+        ResponseEntity<ResponseDto> response = productService.postProduct(authToken, productRequestDto);
 
-        ResponseDto response = responseDto.getBody();
+        ResponseDto responseDto = response.getBody();
 
-        String code = response.getCode();
-        String message = response.getMessage();
+        String code = responseDto.getCode();
+        String message = responseDto.getMessage();
     
         assertEquals("SU", code);
         assertEquals("Success", message);
@@ -52,17 +54,17 @@ public class ProductSerivceTest {
     public void patchPriceProduct() {
         AuthToken authToken = new AuthToken("martId", "mart");
 
-        int inputProductNumber = 1;
+        int inputProductNumber = 24;
         int inputProductPrice = 40000;
 
         PatchPriceProductRequestDto patchPriceProductRequestDto = new PatchPriceProductRequestDto(inputProductNumber, inputProductPrice);
 
-        ResponseEntity<ResponseDto> responseDto = productService.patchPriceProduct(authToken, patchPriceProductRequestDto);
+        ResponseEntity<ResponseDto> response = productService.patchPriceProduct(authToken, patchPriceProductRequestDto);
 
-        ResponseDto response = responseDto.getBody();
+        ResponseDto responseDto = response.getBody();
 
-        String code = response.getCode();
-        String message = response.getMessage();
+        String code = responseDto.getCode();
+        String message = responseDto.getMessage();
     
         assertEquals("SU", code);
         assertEquals("Success", message);
@@ -80,12 +82,12 @@ public class ProductSerivceTest {
 
         Integer productNumber = 1;
         
-        ResponseEntity<ResponseDto> responseDto = productService.deleteProduct(authToken, productNumber);
+        ResponseEntity<ResponseDto> response = productService.deleteProduct(authToken, productNumber);
 
-        ResponseDto response = responseDto.getBody();
+        ResponseDto responseDto = response.getBody();
 
-        String code = response.getCode();
-        String message = response.getMessage();
+        String code = responseDto.getCode();
+        String message = responseDto.getMessage();
 
         assertEquals("SU", code);
         assertEquals("Success", message);
@@ -93,5 +95,26 @@ public class ProductSerivceTest {
         ProductEntity productEntity = productRepository.findByProductNumber(productNumber);
 
         assertNull(productEntity);
+    }
+
+    @Test
+    public void getParticularDateProductPrice()  {
+        AuthToken authToken = new AuthToken("martId", "mart");
+
+        String date = "2023-09-07 15:10:25";
+        int prodcutNumber = 24;
+        GetParticularDateProductPriceRequestDto requestDto = new GetParticularDateProductPriceRequestDto(date, prodcutNumber);
+
+        ResponseEntity<? super GetParticularDateProductPriceResponseDto> response 
+            = productService.getParticularDateProductPrice(authToken, requestDto);
+
+        GetParticularDateProductPriceResponseDto responseDto = (GetParticularDateProductPriceResponseDto)response.getBody();
+
+        String code = responseDto.getCode();
+        String message = responseDto.getMessage();
+
+        assertEquals("SU", code);
+        assertEquals("Success", message);
+
     }
 }
