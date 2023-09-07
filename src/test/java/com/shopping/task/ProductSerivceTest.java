@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.ResponseEntity;
 
+import com.shopping.task.dto.request.PatchPriceProductRequestDto;
 import com.shopping.task.dto.request.PostProductRequestDto;
 import com.shopping.task.dto.response.ResponseDto;
 import com.shopping.task.entity.ProductEntity;
@@ -21,17 +22,19 @@ public class ProductSerivceTest {
     ProductService productService;
     @Autowired
     AuthService authService;
+    @Autowired
+    ProductRepository productRepository;
 
     @Test
     public void postProduct() {
 
         AuthToken authToken = new AuthToken("martId", "mart");
 
-        String prodcutName = "사과 한 박스";
-        int productPrice = 35000;
-        int prodcutDeliveryCharge = 3000;
+        String inputProdcutName = "사과 한 박스";
+        int inputProductPrice = 35000;
+        int inputProdcutDeliveryCharge = 3000;
 
-        PostProductRequestDto productRequestDto = new PostProductRequestDto(prodcutName, productPrice, prodcutDeliveryCharge);
+        PostProductRequestDto productRequestDto = new PostProductRequestDto(inputProdcutName, inputProductPrice, inputProdcutDeliveryCharge);
         
         ResponseEntity<ResponseDto> responseDto = productService.postProduct(authToken, productRequestDto);
 
@@ -42,6 +45,31 @@ public class ProductSerivceTest {
     
         assertEquals("SU", code);
         assertEquals("Success", message);
+    }
 
+    @Test
+    public void patchPriceProduct() {
+        AuthToken authToken = new AuthToken("martId", "mart");
+
+        int inputProductNumber = 4;
+        int inputProductPrice = 30000;
+
+        PatchPriceProductRequestDto patchPriceProductRequestDto = new PatchPriceProductRequestDto(inputProductNumber, inputProductPrice);
+
+        ResponseEntity<ResponseDto> responseDto = productService.patchPriceProduct(authToken, patchPriceProductRequestDto);
+
+        ResponseDto response = responseDto.getBody();
+
+        String code = response.getCode();
+        String message = response.getMessage();
+    
+        assertEquals("SU", code);
+        assertEquals("Success", message);
+
+        ProductEntity productEntity = productRepository.findByProductNumber(inputProductNumber);
+
+        int productPrice = productEntity.getPrice();
+
+        assertEquals(inputProductPrice, productPrice);
     }
 }
