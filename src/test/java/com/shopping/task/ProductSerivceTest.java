@@ -78,7 +78,7 @@ public class ProductSerivceTest {
     public void deleteProduct() {
         AuthToken authToken = new AuthToken("martId", "mart");
 
-        Integer productNumber = 10;
+        Integer productNumber = 1;
         
         ResponseEntity<ResponseDto> responseDto = productService.deleteProduct(authToken, productNumber);
 
