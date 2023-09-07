@@ -88,7 +88,7 @@ public class ProductServiceImplement implements ProductService{
             boolean samePrice = (productPrice == inputProductPrice);
 
             if(!samePrice) {
-                ProductPriceRecordEntity priceRecordEntity = new ProductPriceRecordEntity(productEntity);
+                ProductPriceRecordEntity priceRecordEntity = new ProductPriceRecordEntity(productEntity, inputProductPrice);
                 productPriceRecordRepository.save(priceRecordEntity);
             }
 
@@ -126,7 +126,7 @@ public class ProductServiceImplement implements ProductService{
 
             if(samePrice) return ResponseMessage.SAME_PRICE;
 
-            ProductPriceRecordEntity priceRecordEntity = new ProductPriceRecordEntity(productEntity);
+            ProductPriceRecordEntity priceRecordEntity = new ProductPriceRecordEntity(productEntity, inputProductPrice);
             productPriceRecordRepository.save(priceRecordEntity);
 
             ProductEntity updateProductEntity = new ProductEntity(productEntity, dto);
@@ -197,7 +197,7 @@ public class ProductServiceImplement implements ProductService{
             
             if(productEntity == null) return ResponseMessage.NOT_EXIST_PRODUCT_NUMBER;
 
-            List<ProductPriceRecordEntity> productPriceRecordEntities = productPriceRecordRepository.findByProductEntityOrderByBeforeModifyPriceDesc(productEntity);
+            List<ProductPriceRecordEntity> productPriceRecordEntities = productPriceRecordRepository.findByProductEntityOrderByModifyPriceDesc(productEntity);
 
             if(productPriceRecordEntities.isEmpty()) return ResponseMessage.NOT_EXIST_PRODUCT_PRICE_RECORD;
             
@@ -235,7 +235,7 @@ public class ProductServiceImplement implements ProductService{
                 String modifyDate = productPriceRecordEntity.getModifyDate();
                 
                 if(modifyDate.equals(date)) {
-                    int price = productPriceRecordEntity.getBeforeModifyPrice();
+                    int price = productPriceRecordEntity.getModifyPrice();
                     body = new GetParticularDateProductPriceResponseDto(price);
                 }
             }

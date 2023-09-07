@@ -37,8 +37,8 @@ public class ProductPriceRecordEntity {
     @Column(name = "modify_date", nullable = false, length = 19)
     private String modifyDate;
 
-    @Column (name = "before_modify_price", nullable = false)
-    private int beforeModifyPrice;
+    @Column (name = "modify_price", nullable = false)
+    private int modifyPrice;
 
 
     public ProductPriceRecordEntity (ProductEntity productEntity) {
@@ -48,6 +48,16 @@ public class ProductPriceRecordEntity {
 
         this.productEntity = productEntity;
         this.modifyDate = modifyDate;
-        this.beforeModifyPrice = productEntity.getPrice();
+        this.modifyPrice = productEntity.getPrice();
+    }
+
+    public ProductPriceRecordEntity (ProductEntity productEntity, int modifyPrice) {
+        Date now = new Date(); 
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String modifyDate = simpleDateFormat.format(now);
+
+        this.productEntity = productEntity;
+        this.modifyDate = modifyDate;
+        this.modifyPrice = modifyPrice;
     }
 }

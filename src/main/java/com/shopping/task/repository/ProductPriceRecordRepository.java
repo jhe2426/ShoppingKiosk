@@ -9,7 +9,7 @@ import com.shopping.task.entity.ProductEntity;
 import com.shopping.task.entity.ProductPriceRecordEntity;
 
 public interface ProductPriceRecordRepository extends JpaRepository<ProductPriceRecordEntity, Integer> {
-    public List<ProductPriceRecordEntity> findByProductEntityOrderByBeforeModifyPriceDesc(ProductEntity productEntity);
+    public List<ProductPriceRecordEntity> findByProductEntityOrderByModifyPriceDesc(ProductEntity productEntity);
     public List<ProductPriceRecordEntity> findByProductEntity(ProductEntity productEntity);
 
     @Query (
