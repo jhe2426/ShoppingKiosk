@@ -10,6 +10,7 @@ import com.shopping.task.entity.ProductEntity;
 
 public interface ProductRepository extends JpaRepository<ProductEntity, Integer>  {
     public ProductEntity findByProductNumber(int productNumber);
+    public ProductEntity findByNameAndPrice(String name, int price);
 
     
     @Query (
