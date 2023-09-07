@@ -49,11 +49,11 @@ public class OrdersSerivceTest {
 
         List<ProductOrdersInformation> productOrdersInformationList = new ArrayList<>();
 
-        int inputProductNumberOne = 20;
+        int inputProductNumberOne = 1;
         int inputProductQuantityOne = 2;
 
         
-        int inputProductNumberTwo = 21;
+        int inputProductNumberTwo = 2;
         int inputProductQuantityTwo = 1;
 
         ProductOrdersInformation productOrdersInformationOne = new ProductOrdersInformation(inputProductNumberOne, inputProductQuantityOne);
@@ -108,14 +108,14 @@ public class OrdersSerivceTest {
 
         
 
-        int inputProductNumberOne = 20;
+        int inputProductNumberOne = 1;
         int inputProductQuantityOne = 2;
 
         
-        int inputProductNumberTwo = 21;
+        int inputProductNumberTwo = 2;
         int inputProductQuantityTwo = 1;
 
-        int inputCouponNumber = 7;
+        int inputCouponNumber = 1;
 
         CouponApplicationOrdersInformation couponApplicationOrdersInformationOne 
             = new CouponApplicationOrdersInformation(inputProductNumberOne, inputProductQuantityOne);

@@ -54,7 +54,7 @@ public class ProductSerivceTest {
     public void patchPriceProduct() {
         AuthToken authToken = new AuthToken("martId", "mart");
 
-        int inputProductNumber = 24;
+        int inputProductNumber = 1;
         int inputProductPrice = 40000;
 
         PatchPriceProductRequestDto patchPriceProductRequestDto = new PatchPriceProductRequestDto(inputProductNumber, inputProductPrice);
@@ -101,8 +101,8 @@ public class ProductSerivceTest {
     public void getParticularDateProductPrice()  {
         AuthToken authToken = new AuthToken("martId", "mart");
 
-        String date = "2023-09-07 15:10:25";
-        int prodcutNumber = 24;
+        String date = "2023-09-03 19:22:15";
+        int prodcutNumber = 1;
         GetParticularDateProductPriceRequestDto requestDto = new GetParticularDateProductPriceRequestDto(date, prodcutNumber);
 
         ResponseEntity<? super GetParticularDateProductPriceResponseDto> response 
